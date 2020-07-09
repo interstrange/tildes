@@ -16,7 +16,8 @@ before_install:
 install:
   - pip install -r requirements.txt -r requirements-dev.txt
   - npm install
-  - sudo salt-call state.show_highstate --local --retcode-passthrough
+  - sudo cat /var/log/salt/*
+  - sudo salt-call state.show_highstate --local --retcode-passthrough -l info
   - sudo salt-call state.apply --local --retcode-passthrough -l info
 # command to run tests
 before_script: cd tildes
