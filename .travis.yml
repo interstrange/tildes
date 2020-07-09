@@ -4,12 +4,16 @@ python:
   - "3.8-dev"  # 3.8 development branch
 # command to install dependencies
 before_install:
-  - sudo apt-get update
-  - sudo apt-get -y install cmark cmark-gfm
+  - curl -L http://bootstrap.saltstack.org | sudo sh -s
+  - sudo cp salt/minion /etc/salt/minion
+  - sudo service salt-minion restart
+  
   - cd tildes
 install:
   - pip install -r requirements.txt -r requirements-dev.txt
   - npm install
+  - sudo salt-call state.show_highstate --local --retcode-passthrough
+  - sudo salt-call state.apply --local --retcode-passthrough
 # command to run tests
 before_script: cd tildes
 script:
