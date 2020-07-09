@@ -6,6 +6,7 @@ python:
 install:
   - pip install -r tildes/requirements.txt -r tildes/requirements-dev.txt
 # command to run tests
+before_script: cd tildes
 script:
   - pytest
   - mypy .
