@@ -8,12 +8,16 @@ before_install:
   - sudo cp salt/minion /etc/salt/minion
   - sudo service salt-minion restart
   
+  # debugging
+  - sudo cat /var/log/salt/*
+  - sudo salt-call grains.items --local
+  
   - cd tildes
 install:
   - pip install -r requirements.txt -r requirements-dev.txt
   - npm install
   - sudo salt-call state.show_highstate --local --retcode-passthrough
-  - sudo salt-call state.apply --local --retcode-passthrough
+  - sudo salt-call state.apply --local --retcode-passthrough -l info
 # command to run tests
 before_script: cd tildes
 script:
