@@ -3,8 +3,11 @@ python:
   - "3.8"
   - "3.8-dev"  # 3.8 development branch
 # command to install dependencies
+before_install: cd tildes
 install:
   - pip install -r tildes/requirements.txt -r tildes/requirements-dev.txt
+  - npm install
+  - apt install cmark
 # command to run tests
 before_script: cd tildes
 script:
