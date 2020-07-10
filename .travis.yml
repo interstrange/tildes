@@ -1,29 +1,25 @@
+dist: bionic
 language: python
-python:
-  - "3.8"
-  - "3.8-dev"  # 3.8 development branch
-# command to install dependencies
-before_install:
-  - curl -L http://bootstrap.saltstack.org | sudo sh -s
-  - sudo cp salt/minion /etc/salt/minion
-  - sudo service salt-minion restart
-  
-  # debugging
-  - sudo cat /var/log/salt/*
-  - sudo salt-call grains.items --local
-  
-  - cd tildes
+
 install:
-  - pip install -r requirements.txt -r requirements-dev.txt
-  - npm install
-  - sudo cat /var/log/salt/*
-  - sudo salt-call state.show_highstate --local --retcode-passthrough -l info
-  - sudo salt-call state.apply --local --retcode-passthrough -l info
-# command to run tests
-before_script: cd tildes
+  # Install libvrt & KVM
+  - sudo apt-get update
+  - sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev
+
+  # Download Vagrant & Install Vagrant package
+  - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.deb
+  - sudo dpkg -i vagrant_2.2.7_x86_64.deb
+
+  # Vagrant correctly installed?
+  - vagrant --version
+
+  # Install vagrant-libvirt Vagrant plugin
+  - sudo vagrant plugin install vagrant-libvirt
+
 script:
-  - pytest
-  - mypy .
-  - black --check .
-  - prospector
-  - npm run lint
+  - sudo vagrant up --provider=libvirt
+  - sudo vagrant ssh -c "pytest"
+  - sudo vagrant ssh -c "mypy ."
+  - sudo vagrant ssh -c "black --check ."
+  - sudo vagrant ssh -c "prospector"
+  - sudo vagrant ssh -c "npm run lint"
