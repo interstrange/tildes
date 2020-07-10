@@ -18,8 +18,9 @@ install:
 
 script:
   - sudo vagrant up --provider=libvirt
-  - sudo vagrant ssh -c "pytest"
-  - sudo vagrant ssh -c "mypy ."
-  - sudo vagrant ssh -c "black --check ."
-  - sudo vagrant ssh -c "prospector"
-  - sudo vagrant ssh -c "npm run lint"
+  
+  - sudo vagrant ssh -c ". activate && pytest"
+  - sudo vagrant ssh -c ". activate && mypy ."
+  - sudo vagrant ssh -c ". activate && black --check ."
+  - sudo vagrant ssh -c ". activate && prospector"
+  - sudo vagrant ssh -c ". activate && npm run lint"
