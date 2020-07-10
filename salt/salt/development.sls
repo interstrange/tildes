@@ -19,3 +19,6 @@ automatic-activate:
   file.append:
     - name: '/home/{{ app_username }}/.bashrc'
     - text: 'source activate'
+
+npm:
+  pkg.installed
