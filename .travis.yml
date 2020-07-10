@@ -19,8 +19,16 @@ install:
 script:
   - sudo vagrant up --provider=libvirt
   
+  - sudo vagrant ssh -c ". activate && ls /opt"
+  - sudo vagrant ssh -c ". activate && ls /opt/tildes"
+  - sudo vagrant ssh -c ". activate && ls /opt/tildes/static"
+  - sudo vagrant ssh -c ". activate && ls /opt/tildes/static/css"
+  
   - sudo vagrant ssh -c ". activate && pytest"
   - sudo vagrant ssh -c ". activate && mypy ."
   - sudo vagrant ssh -c ". activate && black --check ."
   - sudo vagrant ssh -c ". activate && prospector"
   - sudo vagrant ssh -c ". activate && npm run lint"
+
+
+apt install npm
