@@ -29,6 +29,3 @@ script:
   - sudo vagrant ssh -c ". activate && black --check ."
   - sudo vagrant ssh -c ". activate && prospector"
   - sudo vagrant ssh -c ". activate && npm run lint"
-
-
-apt install npm
