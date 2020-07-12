@@ -24,6 +24,8 @@ script:
   - sudo vagrant ssh -c ". activate && ls /opt/tildes/static"
   - sudo vagrant ssh -c ". activate && ls /opt/tildes/static/css"
   
+  - sleep 15s
+  
   - sudo vagrant ssh -c ". activate && pytest"
   - sudo vagrant ssh -c ". activate && mypy ."
   - sudo vagrant ssh -c ". activate && black --check ."
